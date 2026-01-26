@@ -40,10 +40,10 @@ SHADOW_STD_DB = 4.0
 FREQ_HZ = 2.4e9
 
 # Number of base stations to simulate
-NUM_BASE_STATIONS = 6
+NUM_BASE_STATIONS = 12
 
 # Random seed for reproducibility (change to get different random placements)
-RANDOM_SEED = 2
+RANDOM_SEED = 21
 
 # =============================================================================
 # FIXED MAP PARAMETERS - Do not modify
@@ -347,15 +347,19 @@ def run_coverage_simulation():
 
     print(f"\nGenerating visualization...")
 
-    # Colors for each base station (RGB values)
-    colors_rgb = [
-        (1.0, 0.0, 0.0),    # BS 1: Red
-        (0.0, 1.0, 0.0),    # BS 2: Green
-        (0.0, 0.0, 1.0),    # BS 3: Blue
-        (0.0, 1.0, 1.0),    # BS 4: Cyan
-        (1.0, 0.0, 1.0),    # BS 5: Magenta
-        (1.0, 1.0, 0.0),    # BS 6: Yellow
-    ]
+    # Generate distinct colors for each base station using a colormap
+    # 'tab10' provides 10 distinct colors; 'tab20' provides 20
+    # For more than 20 base stations, 'hsv' colormap provides continuous hues
+    if NUM_BASE_STATIONS <= 10:
+        cmap = plt.cm.tab10
+        colors_rgb = [cmap(i)[:3] for i in range(NUM_BASE_STATIONS)]
+    elif NUM_BASE_STATIONS <= 20:
+        cmap = plt.cm.tab20
+        colors_rgb = [cmap(i)[:3] for i in range(NUM_BASE_STATIONS)]
+    else:
+        # Use HSV colormap for large numbers of base stations
+        cmap = plt.cm.hsv
+        colors_rgb = [cmap(i / NUM_BASE_STATIONS)[:3] for i in range(NUM_BASE_STATIONS)]
 
     # Start with white background, gray buildings
     output_img = np.ones((IMG_HEIGHT, IMG_WIDTH, 3))
