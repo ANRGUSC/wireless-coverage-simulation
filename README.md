@@ -1,43 +1,55 @@
 # USC Campus Wireless Coverage Simulation
 
-A wireless coverage simulation tool that demonstrates key concepts in wireless network planning using a map of the USC campus.
+A wireless coverage simulation tool that demonstrates key concepts in wireless network planning using a map of the USC campus. The project includes both Python scripts for batch simulation and an interactive web application.
 
 ## Features
 
 - **Path loss modeling** using free-space path loss (Friis equation)
 - **Log-normal shadowing** to model random signal variations
-- **Line-of-sight (LOS) blocking** by buildings using Bresenham's algorithm
+- **Line-of-sight (LOS) blocking** by buildings
 - **SNR-based coverage determination**
 - Visual coverage map generation with color-coded base station coverage areas
 
-## Usage
+## Project Structure
+
+### Python Scripts
+
+- `usc_coverage.py` — Batch coverage simulation that generates a static coverage map (`output.png`)
+- `interactive_coverage_tool.py` — Interactive PyQt5 application for placing, moving, and deleting base stations with real-time coverage visualization
 
 ```bash
 python usc_coverage.py
+python interactive_coverage_tool.py
 ```
 
-The simulation will generate a coverage visualization saved as `output.png`.
+**Python Requirements:** Python 3.x, NumPy, Pillow (PIL), Matplotlib, PyQt5
+
+### Web Application (`usc-wireless-coverage/`)
+
+A Progressive Web App that reimplements the interactive coverage tool for the browser. Deployed at [usc-wireless-coverage.vercel.app](https://usc-wireless-coverage.vercel.app).
+
+**Tech stack:** React, TypeScript, Vite, HTML5 Canvas 2D, Web Workers, PWA (vite-plugin-pwa)
+
+- Click to place base stations, drag to move, right-click to delete
+- Adjustable RF parameters with real-time recalculation
+- Export coverage map as PNG
+- Works offline as an installable PWA
+
+See [`usc-wireless-coverage/README.md`](usc-wireless-coverage/README.md) for more details.
 
 ## Adjustable Parameters
 
-Students and researchers can modify these parameters in the script:
-
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `TX_POWER_DBM` | -10.0 | Transmit power in dBm |
-| `NOISE_DBM` | -101.0 | Noise floor in dBm |
-| `SNR_THRESHOLD_DB` | 10.0 | Minimum SNR for coverage |
-| `SHADOW_STD_DB` | 4.0 | Log-normal shadowing std dev |
-| `FREQ_HZ` | 2.4e9 | Carrier frequency (2.4 GHz) |
-| `NUM_BASE_STATIONS` | 6 | Number of base stations |
-| `RANDOM_SEED` | 2 | Seed for reproducibility |
+| TX Power | -10.0 dBm | Transmit power |
+| Noise Floor | -101.0 dBm | Noise floor |
+| SNR Threshold | 10.0 dB | Minimum SNR for coverage |
+| Shadowing Std Dev | 4.0 dB | Log-normal shadowing standard deviation |
+| Frequency | 2.4 GHz | Carrier frequency |
 
-## Requirements
+## Acknowledgments
 
-- Python 3.x
-- NumPy
-- Pillow (PIL)
-- Matplotlib
+Thanks to USC student Xinwei Li for providing a clean USC campus map used in this project.
 
 ## Author
 

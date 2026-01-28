@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# USC Wireless Coverage — Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive Progressive Web App for simulating wireless coverage on the USC campus. This is a browser-based reimplementation of the Python `interactive_coverage_tool.py`.
 
-Currently, two official plugins are available:
+**Live demo:** [usc-wireless-coverage.vercel.app](https://usc-wireless-coverage.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Place base stations** by clicking on outdoor areas of the campus map
+- **Drag to reposition** base stations, **right-click to delete** them
+- **Adjust RF parameters** (TX power, noise floor, SNR threshold, shadowing std dev, frequency) via the sidebar
+- **Real-time coverage visualization** with color-coded coverage areas per base station
+- **Statistics display** showing base station count, coverage percentage, and max range
+- **Export** the coverage map as a PNG image
+- **Offline support** — installable as a PWA with service worker caching
+- **Coordinate readout** on mouse hover (meters)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| Layer | Technology |
+|-------|------------|
+| Framework | React 18 + TypeScript |
+| Build tool | Vite |
+| Rendering | HTML5 Canvas 2D with `ImageData` pixel manipulation |
+| Computation | Web Worker (all physics runs off the main thread) |
+| PWA | vite-plugin-pwa with Workbox |
+| Styling | CSS Modules |
+| State management | React `useReducer` |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Architecture
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Coverage engine** (`src/workers/coverageEngine.ts`) — Implements free-space path loss (Friis), log-normal shadowing with a seedable PRNG, and radial ray-cast line-of-sight checking. Computation runs at 1/8 resolution (~300x220 pixels) for performance, with CSS canvas scaling handling the upscale to display size.
+- **Web Worker** (`src/workers/coverage.worker.ts`) — Runs the coverage engine off the main thread so the UI stays responsive. Uses a request-ID pattern to discard stale results during rapid interaction.
+- **Seedable PRNG** (`src/workers/prng.ts`) — Mulberry32 uniform generator with Box-Muller polar method for deterministic Gaussian shadowing (seed=42).
+- **Canvas interaction** (`src/components/MapCanvas/MapCanvas.tsx`) — Handles click-to-place, drag-to-move, and right-click-to-delete with coordinate transforms between display and image space.
+- **Debounced recalculation** — 150ms debounce coalesces rapid parameter or base station changes before triggering the worker.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Build & Deploy
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npx vercel --prod
 ```
+
+## Physics Model
+
+- **Path loss:** FSPL = 20 log10(4 pi d / lambda)
+- **Max range:** (lambda / 4 pi) * 10^(maxPathLoss / 20), where maxPathLoss = txPower - noise - snrThreshold + 3 * shadowStd
+- **Shadowing:** Gaussian N(0, shadowStd), deterministic via seed=42
+- **LOS:** Radial ray-cast from each base station (720 rays), building mask blocks propagation
+- **Map scale:** 640m x 430m
