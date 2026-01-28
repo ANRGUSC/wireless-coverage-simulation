@@ -1,0 +1,63 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a2e;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.canvas {
+  cursor: crosshair;
+  image-rendering: auto;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
+
+.statusBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+  background: rgba(15, 23, 42, 0.85);
+  color: #94a3b8;
+  font-size: 0.75rem;
+  backdrop-filter: blur(4px);
+}
+
+.coords {
+  font-family: monospace;
+  color: #cbd5e1;
+}
+
+.calculatingOverlay {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.8);
+  padding: 8px 14px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #334155;
+  border-top-color: #990000;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

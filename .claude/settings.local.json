@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python interactive_coverage_tool.py:*)"
+      "Bash(python interactive_coverage_tool.py:*)",
+      "Bash(python:*)",
+      "Bash(npm create vite@latest . -- --template react-ts)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Bash(copy \"C:\\\\Users\\\\bhask\\\\claude\\\\wireless_coverage\\\\usc_map_buildings_filled.png\" \"C:\\\\Users\\\\bhask\\\\claude\\\\wireless_coverage\\\\usc-wireless-coverage\\\\public\\\\usc_map_buildings_filled.png\")",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

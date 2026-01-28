@@ -1,0 +1,243 @@
+.sidebar {
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  flex: 0 0 300px;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-right: 1px solid #1e293b;
+  height: 100vh;
+}
+
+.header {
+  text-align: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 4px 0 0 0;
+}
+
+.panel {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.panelTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.fieldLabel {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.fieldInputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.slider {
+  flex: 1;
+  height: 4px;
+  appearance: none;
+  background: #334155;
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #990000;
+  cursor: pointer;
+  border: 2px solid #fbbf24;
+}
+
+.numberInput {
+  width: 65px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  color: #e2e8f0;
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.numberInput:focus {
+  outline: none;
+  border-color: #990000;
+}
+
+.applyButton {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px;
+  background: #990000;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.applyButton:hover:not(:disabled) {
+  background: #7f1d1d;
+}
+
+.applyButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.statValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+.coverageBar {
+  width: 100%;
+  height: 6px;
+  background: #334155;
+  border-radius: 3px;
+  margin: 4px 0 8px 0;
+  overflow: hidden;
+}
+
+.coverageBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #990000, #fbbf24);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.progressPanel {
+  background: #1e293b;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.progressText {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 4px;
+  background: #334155;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: #990000;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.instructionsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+.instructionsList li {
+  padding: 3px 0;
+}
+
+.instructionsList strong {
+  color: #cbd5e1;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actionButton {
+  width: 100%;
+  padding: 8px;
+  background: #334155;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.actionButton:hover:not(:disabled) {
+  background: #475569;
+}
+
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.footer {
+  margin-top: auto;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #475569;
+  padding-top: 8px;
+  border-top: 1px solid #1e293b;
+}
+
+.footer p {
+  margin: 0;
+}
