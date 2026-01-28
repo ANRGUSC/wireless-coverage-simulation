@@ -66,7 +66,9 @@ export default function MapCanvas({
       // Draw coverage image (small res) scaled up to display size
       const srcW = coverageResult.renderWidth;
       const srcH = coverageResult.renderHeight;
-      const imgData = new ImageData(coverageResult.imageData, srcW, srcH);
+      const clampedArr = new Uint8ClampedArray(srcW * srcH * 4);
+      clampedArr.set(coverageResult.imageData);
+      const imgData = new ImageData(clampedArr, srcW, srcH);
       // Use offscreen canvas to scale
       const offscreen = document.createElement('canvas');
       offscreen.width = srcW;
